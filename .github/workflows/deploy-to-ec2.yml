@@ -24,6 +24,8 @@ jobs:
           ssh -i <(echo "$EC2_SSH_KEY") $EC2_USER@$EC2_HOST << EOF
             cd /home/ubuntu/aws_test
             git pull origin master  # Pull the latest code
-            bundle exec pumactl -F config/puma.rb restart
+            docker stop my_app
+            docker build -t my_app .
+            docker run -e RAILS_MASTER_KEY=$RAILS_MASTER_KEY -p 3000:3000 -t my_app
             # Add commands to restart your application
           EOF
