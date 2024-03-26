@@ -24,5 +24,6 @@ jobs:
           ssh -i <(echo "$EC2_SSH_KEY") $EC2_USER@$EC2_HOST << EOF
             cd /home/ubuntu/aws_test
             git pull origin master  # Pull the latest code
+            bundle exec pumactl -F config/puma.rb restart
             # Add commands to restart your application
           EOF
